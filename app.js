@@ -46,6 +46,14 @@ camera.keysDown = []
 BABYLON.SceneLoader.ImportMesh("", "./textures/soviet_house/", "scene.gltf", scene, function(newMeshes){
     newMeshes[0].scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
     newMeshes[0].position.y = -2
+    newMeshes[0].position.z = -2 
+    const house1 = newMeshes[0]
+    for(let i = 0; i < 10; i++) {
+        const house2 = house1.clone('house'+ i)
+        house2.position.y = -2
+        house2.position.z = 4*i
+    }
+    
 }) 
 
 let player;

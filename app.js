@@ -43,22 +43,16 @@ var createScene = () => {
   camera.keysUp = []
   camera.keysDown = []
 
-  const player = BABYLON.Mesh.CreateBox('box', 1.0, scene)
+    let player;
+  BABYLON.SceneLoader.ImportMesh("", "", "./Baked_Animations_Intergalactic_Spaceships_Version_2/GLTF_EMBEDDED/Baked_Animations_Intergalactic_Spaceships_Version_2.gltf", scene, function(newMeshes){
+    newMeshes[0].scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
+    
+    player = newMeshes[0]
+    player.checkCollisions = true
 
-  // var player2 = BABYLON.MeshBuilder.CreateCylinder("indicator", {
-  //    height: 1,
-  //   diameterTop: 0.5,
-  //   diameterBottom: 0
-  // }, scene);
-  // player2.checkCollisions = true;
-  player.checkCollisions = true
+    player.physicsImpostor = new BABYLON.PhysicsImpostor(player, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 100, restitution: 0.35 }, scene)
 
-  player.physicsImpostor = new BABYLON.PhysicsImpostor(player, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 100, restitution: 0.35 }, scene)
-
-  // player.rotation.x = -Math.PI / 2
-  // player.bakeCurrentTransformIntoVertices()
-
-  const Material = new BABYLON.StandardMaterial('material', scene)
+    const Material = new BABYLON.StandardMaterial('material', scene)
   Material.emissiveColor = new BABYLON.Color3(0, 0.58, 0.86)
   player.material = Material
   camera.setTarget(player)
@@ -101,6 +95,21 @@ var createScene = () => {
       }
     }
   }
+});
+
+  
+
+  // var player2 = BABYLON.MeshBuilder.CreateCylinder("indicator", {
+  //    height: 1,
+  //   diameterTop: 0.5,
+  //   diameterBottom: 0
+  // }, scene);
+  // player2.checkCollisions = true;
+  
+  // player.rotation.x = -Math.PI / 2
+  // player.bakeCurrentTransformIntoVertices()
+
+  
 
   engine.runRenderLoop(() => {
     if (player != null) {
@@ -166,10 +175,7 @@ var createScene = () => {
   ground.position.x = -28
   ground.checkCollisions = true
 
-  BABYLON.SceneLoader.ImportMesh("", "", "./Baked_Animations_Intergalactic_Spaceships_Version_2/GLTF_EMBEDDED/Baked_Animations_Intergalactic_Spaceships_Version_2.gltf", scene, function(newMeshes){
-    newMeshes[0].scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
-    newMeshes[0].position.y = 1
-});
+  
 
   // engine.runRenderLoop(() => { camera.alpha += 0.001; });
   return scene
